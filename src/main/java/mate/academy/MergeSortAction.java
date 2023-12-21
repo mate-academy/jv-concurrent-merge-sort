@@ -17,16 +17,11 @@ public class MergeSortAction extends RecursiveAction {
         }
         var left = Arrays.copyOfRange(arr, 0, arr.length / 2);
         var right = Arrays.copyOfRange(arr, arr.length / 2, arr.length);
-
-        var leftSortAction = new MergeSortAction(left);
-        var rightSortAction = new MergeSortAction(right);
-        leftSortAction.fork();
-        rightSortAction.compute();
-        leftSortAction.join();
-        merge(arr, left, right);
+        invokeAll(new MergeSortAction(left), new MergeSortAction(right));
+        merge(left, right);
     }
 
-    private static void merge(int[] arr, int[] left, int[] right) {
+    private void merge(int[] left, int[] right) {
         int i = 0;
         int j = 0;
         while (i < left.length && j < right.length) {
