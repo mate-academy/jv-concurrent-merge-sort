@@ -3,7 +3,7 @@ package mate.academy;
 import java.util.Arrays;
 import java.util.concurrent.RecursiveTask;
 
-public class MergeSortAction  extends RecursiveTask<Void> {
+public class MergeSortAction extends RecursiveTask<Void> {
     private final int[] array;
 
     public MergeSortAction(int[] array) {
