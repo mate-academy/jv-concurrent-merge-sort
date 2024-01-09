@@ -4,10 +4,10 @@ import java.util.concurrent.RecursiveTask;
 import java.util.stream.IntStream;
 
 public class MergeSortAction extends RecursiveTask<Integer[]> {
+    private static final int THRESHOLD = 5;
     private final int[] array;
     private final int start;
     private final int end;
-    private static final int THRESHOLD = 5;
 
     public MergeSortAction(int[] array) {
         this.array = array;
