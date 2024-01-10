@@ -10,9 +10,7 @@ public class MergeSortAction extends RecursiveTask<Integer[]> {
     private final int end;
 
     public MergeSortAction(int[] array) {
-        this.array = array;
-        this.start = 0;
-        this.end = 0;
+        this(array, 0, array.length);
     }
 
     public MergeSortAction(int[] array, int start, int end) {
