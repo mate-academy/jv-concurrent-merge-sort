@@ -62,10 +62,9 @@ public class MergeSortAction extends RecursiveAction {
                     rightDigitsUsedUp++;
                 }
             }
-            
+
             if (rightDigitsUsedUp == right.length) {
                 array[i + rightDigitsUsedUp] = left[i];
-                continue;
             }
         }
 
