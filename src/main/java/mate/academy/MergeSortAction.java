@@ -13,7 +13,7 @@ public class MergeSortAction extends RecursiveAction {
         this(array, 0, array.length);
     }
 
-    public MergeSortAction(int[] array, int start, int end) {
+    private MergeSortAction(int[] array, int start, int end) {
         this.array = array;
         this.start = start;
         this.end = end;
