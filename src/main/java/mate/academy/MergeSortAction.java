@@ -34,21 +34,24 @@ public class MergeSortAction extends RecursiveAction {
     }
 
     private void combineSortedArrays(int[] array, int[] leftArray, int[] rightArray) {
+        int arrayPosition = 0;
         int leftArrayPosition = 0;
         int rightArrayPosition = 0;
 
-        for (int i = 0; i < array.length; i++) {
-            if (leftArrayPosition < leftArray.length && rightArrayPosition < rightArray.length) {
-                if (leftArray[leftArrayPosition] <= rightArray[rightArrayPosition]) {
-                    array[i] = leftArray[leftArrayPosition++];
-                } else {
-                    array[i] = rightArray[rightArrayPosition++];
-                }
-            } else if (leftArrayPosition < leftArray.length) {
-                array[i] = leftArray[leftArrayPosition++];
+        while (leftArrayPosition < leftArray.length && rightArrayPosition < rightArray.length) {
+            if (leftArray[leftArrayPosition] <= rightArray[rightArrayPosition]) {
+                array[arrayPosition++] = leftArray[leftArrayPosition++];
             } else {
-                array[i] = rightArray[rightArrayPosition++];
+                array[arrayPosition++] = rightArray[rightArrayPosition++];
             }
+        }
+
+        while (leftArrayPosition < leftArray.length) {
+            array[arrayPosition++] = leftArray[leftArrayPosition++];
+        }
+
+        while (rightArrayPosition < rightArray.length) {
+            array[arrayPosition++] = rightArray[rightArrayPosition++];
         }
     }
 }
