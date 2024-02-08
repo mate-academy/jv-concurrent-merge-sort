@@ -5,7 +5,7 @@ import java.util.concurrent.RecursiveAction;
 
 public class MergeSortAction extends RecursiveAction {
     private static final int THRESHOLD = 2;
-    public static final int MERGE_CYCLES_BEGGING_INDEX = 0;
+    private static final int MERGE_CYCLES_BEGGING_INDEX = 0;
     private final int[] array;
 
     public MergeSortAction(int[] array) {
