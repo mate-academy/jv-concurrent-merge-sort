@@ -5,6 +5,7 @@ import java.util.concurrent.RecursiveAction;
 
 public class MergeSortAction extends RecursiveAction {
     private static final int THRESHOLD = 2;
+    public static final int MERGE_CYCLES_BEGGINING_INDEX = 0;
     private final int[] array;
 
     public MergeSortAction(int[] array) {
@@ -19,7 +20,7 @@ public class MergeSortAction extends RecursiveAction {
 
             int mid = array.length / 2;
 
-            int[] left = Arrays.copyOfRange(array, 0, mid);
+            int[] left = Arrays.copyOfRange(array, MERGE_CYCLES_BEGGINING_INDEX, mid);
             int[] right = Arrays.copyOfRange(array, mid, array.length);
 
             MergeSortAction leftTask = new MergeSortAction(left);
@@ -32,9 +33,9 @@ public class MergeSortAction extends RecursiveAction {
     }
 
     private void merge(int[] array, int[] left, int[] right) {
-        int i = 0;
-        int j = 0;
-        int k = 0;
+        int i = MERGE_CYCLES_BEGGINING_INDEX;
+        int j = MERGE_CYCLES_BEGGINING_INDEX;
+        int k = MERGE_CYCLES_BEGGINING_INDEX;
 
         while (i < left.length && j < right.length) {
             if (left[i] < right[j]) {
