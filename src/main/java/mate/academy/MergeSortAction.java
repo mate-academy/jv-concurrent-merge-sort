@@ -37,18 +37,18 @@ public class MergeSortAction extends RecursiveAction {
 
         while (i < leftArray.length && j < rightArray.length) {
             if (leftArray[i] < rightArray[j]) {
-                array[i+j] = leftArray[i++];
+                array[i + j] = leftArray[i++];
             } else {
-                array[i+j] = rightArray[j++];
+                array[i + j] = rightArray[j++];
             }
         }
 
         while (i < leftArray.length) {
-            array[i+j] = leftArray[i++];
+            array[i + j] = leftArray[i++];
         }
 
         while (j < rightArray.length) {
-            array[i+j] = rightArray[j++];
+            array[i + j] = rightArray[j++];
         }
     }
 }
