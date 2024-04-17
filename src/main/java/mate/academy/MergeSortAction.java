@@ -10,7 +10,6 @@ public class MergeSortAction extends RecursiveAction {
         this.array = array;
     }
 
-
     @Override
     protected void compute() {
         if (array.length > THRESHOLD) {
@@ -33,7 +32,6 @@ public class MergeSortAction extends RecursiveAction {
 
             merge(array, left, right);
         }
-
     }
 
     private void merge(int[] array, int[] leftArray, int[] rightArray) {
