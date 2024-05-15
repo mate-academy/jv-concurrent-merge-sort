@@ -5,6 +5,7 @@ import java.util.concurrent.RecursiveAction;
 
 public class MergeSortAction extends RecursiveAction {
 
+    private static final int THRESHOLD = 1;
     private final int[] array;
 
     public MergeSortAction(int[] array) {
@@ -13,13 +14,13 @@ public class MergeSortAction extends RecursiveAction {
 
     @Override
     protected void compute() {
-        if (array.length <= 1) {
+        if (array.length <= THRESHOLD) {
             return;
         }
 
-        int mid = array.length / 2;
-        int[] leftSubArray = Arrays.copyOfRange(array, 0, mid);
-        int[] rightSubArray = Arrays.copyOfRange(array, mid, array.length);
+        int middleIndex = array.length / 2;
+        int[] leftSubArray = Arrays.copyOfRange(array, 0, middleIndex);
+        int[] rightSubArray = Arrays.copyOfRange(array, middleIndex, array.length);
 
         MergeSortAction leftSortAction = new MergeSortAction(leftSubArray);
         MergeSortAction rightSortAction = new MergeSortAction(rightSubArray);
@@ -30,21 +31,21 @@ public class MergeSortAction extends RecursiveAction {
     }
 
     private void merge(int[] leftSubArray, int[] rightSubArray) {
-        int i = 0;
-        int j = 0;
-        int k = 0;
+        int leftIndex = 0;
+        int rightIndex = 0;
+        int mergeIndex = 0;
 
-        while (i < leftSubArray.length && j < rightSubArray.length) {
-            array[k++] = (leftSubArray[i] <= rightSubArray[j])
-                    ? leftSubArray[i++] : rightSubArray[j++];
+        while (leftIndex < leftSubArray.length && rightIndex < rightSubArray.length) {
+            array[mergeIndex++] = (leftSubArray[leftIndex] <= rightSubArray[rightIndex])
+                    ? leftSubArray[leftIndex++] : rightSubArray[rightIndex++];
         }
 
-        while (i < leftSubArray.length) {
-            array[k++] = leftSubArray[i++];
+        while (leftIndex < leftSubArray.length) {
+            array[mergeIndex++] = leftSubArray[leftIndex++];
         }
 
-        while (j < rightSubArray.length) {
-            array[k++] = rightSubArray[j++];
+        while (rightIndex < rightSubArray.length) {
+            array[mergeIndex++] = rightSubArray[rightIndex++];
         }
     }
 }
