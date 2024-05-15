@@ -30,10 +30,13 @@ public class MergeSortAction extends RecursiveAction {
     }
 
     private void merge(int[] leftSubArray, int[] rightSubArray) {
-        int i = 0, j = 0, k = 0;
+        int i = 0;
+        int j = 0;
+        int k = 0;
 
         while (i < leftSubArray.length && j < rightSubArray.length) {
-            array[k++] = (leftSubArray[i] <= rightSubArray[j]) ? leftSubArray[i++] : rightSubArray[j++];
+            array[k++] = (leftSubArray[i] <= rightSubArray[j])
+                    ? leftSubArray[i++] : rightSubArray[j++];
         }
 
         while (i < leftSubArray.length) {
