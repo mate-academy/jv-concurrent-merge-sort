@@ -12,7 +12,7 @@ public class MergeSortAction extends RecursiveAction {
 
     @Override
     protected void compute() {
-        if (array.length < 2) {
+        if (isSorted()) {
             return;
         }
         int midIndex = array.length >> 1;
@@ -20,7 +20,7 @@ public class MergeSortAction extends RecursiveAction {
         int[] rightArray = createCopy(midIndex, array.length);
         List<MergeSortAction> subSortActions =
                 List.of(new MergeSortAction(leftArray), new MergeSortAction(rightArray));
-        subSortActions.forEach(MergeSortAction::fork);
+        invokeAll(subSortActions);
         subSortActions.forEach(MergeSortAction::join);
         merge(leftArray, rightArray);
     }
@@ -43,5 +43,14 @@ public class MergeSortAction extends RecursiveAction {
         int[] result = new int[endIndex - startIndex];
         System.arraycopy(array, startIndex, result, 0, endIndex - startIndex);
         return result;
+    }
+
+    private boolean isSorted() {
+        for (int i = 1; i < array.length; i++) {
+            if (array[i - 1] > array[i]) {
+                return false;
+            }
+        }
+        return true;
     }
 }
