@@ -1,6 +1,5 @@
 package mate.academy;
 
-import java.util.List;
 import java.util.concurrent.RecursiveAction;
 
 public class MergeSortAction extends RecursiveAction {
@@ -15,27 +14,29 @@ public class MergeSortAction extends RecursiveAction {
         if (isSorted()) {
             return;
         }
-        int midIndex = array.length >> 1;
+        int midIndex = array.length / 2;
         int[] leftArray = createCopy(0, midIndex);
         int[] rightArray = createCopy(midIndex, array.length);
-        List<MergeSortAction> subSortActions =
-                List.of(new MergeSortAction(leftArray), new MergeSortAction(rightArray));
-        invokeAll(subSortActions);
-        subSortActions.forEach(MergeSortAction::join);
+        invokeAll(new MergeSortAction(leftArray), new MergeSortAction(rightArray));
         merge(leftArray, rightArray);
     }
 
     private void merge(int[] leftArray, int[] rightArray) {
-        int i = 0;
-        int j = 0;
-        while (i < leftArray.length && j < rightArray.length) {
-            array[i + j] = leftArray[i] <= rightArray[j] ? leftArray[i++] : rightArray[j++];
+        int index = 0;
+        int leftIndex = 0;
+        int rightIndex = 0;
+        while (leftIndex < leftArray.length && rightIndex < rightArray.length) {
+            if (leftArray[leftIndex] <= rightArray[rightIndex]) {
+                array[index++] = leftArray[leftIndex++];
+            } else {
+                array[index++] = rightArray[rightIndex++];
+            }
         }
-        while (i < leftArray.length) {
-            array[i + j] = leftArray[i++];
+        while (leftIndex < leftArray.length) {
+            array[index++] = leftArray[leftIndex++];
         }
-        while (j < rightArray.length) {
-            array[i + j] = rightArray[j++];
+        while (rightIndex < rightArray.length) {
+            array[index++] = rightArray[rightIndex++];
         }
     }
 
