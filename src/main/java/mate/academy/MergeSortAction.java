@@ -9,7 +9,6 @@ public class MergeSortAction extends RecursiveAction {
     private final int finish;
     private final int[] array;
 
-
     public MergeSortAction(int[] array) {
         this(array, 0, array.length);
     }
@@ -39,7 +38,9 @@ public class MergeSortAction extends RecursiveAction {
     private void merge(int[] array, int start, int middle, int finish) {
         int[] left = Arrays.copyOfRange(array, start, middle);
         int[] right = Arrays.copyOfRange(array, middle, finish);
-        int i = 0, j = 0, k = start;
+        int i = 0;
+        int j = 0;
+        int k = start;
         while (i < left.length && j < right.length) {
             if (left[i] <= right[j]) {
                 array[k++] = left[i++];
