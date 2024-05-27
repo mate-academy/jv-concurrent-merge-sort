@@ -7,55 +7,50 @@ public class MergeSortAction extends RecursiveAction {
     private static final int THRESHOLD = 2;
 
     private final int[] array;
-    private final int start;
-    private final int end;
 
     public MergeSortAction(int[] array) {
-        this(array, 0, array.length);
-    }
-
-    private MergeSortAction(int[] array, int start, int end) {
         this.array = array;
-        this.start = start;
-        this.end = end;
     }
 
     @Override
     protected void compute() {
-        if (end - start <= THRESHOLD) {
-            Arrays.sort(array, start, end);
+        if (array.length <= THRESHOLD) {
+            Arrays.sort(array);
         } else {
-            int middle = (start + end) / 2;
-            MergeSortAction left = new MergeSortAction(array, start, middle);
-            MergeSortAction right = new MergeSortAction(array, middle, end);
+            int middle = array.length / 2;
+            int[] leftArray = Arrays.copyOfRange(array, 0, middle);
+            int[] rightArray = Arrays.copyOfRange(array, middle, array.length);
+
+            MergeSortAction left = new MergeSortAction(leftArray);
+            MergeSortAction right = new MergeSortAction(rightArray);
             invokeAll(left, right);
 
-            mergeArrays(start, middle, end);
+            mergeArrays(leftArray, rightArray);
         }
     }
 
-    private void mergeArrays(int start, int middle, int end) {
-        int[] mergedArray = new int[end - start];
-        int left = start;
-        int right = middle;
+    private void mergeArrays(int[] leftArray, int[] rightArray) {
+        int[] mergedArray = new int[leftArray.length + rightArray.length];
+        int left = 0;
+        int right = 0;
         int mergeIndex = 0;
 
-        while (left < middle && right < end) {
-            if (array[left] <= array[right]) {
-                mergedArray[mergeIndex++] = array[left++];
+        while (left < leftArray.length && right < rightArray.length) {
+            if (leftArray[left] <= rightArray[right]) {
+                mergedArray[mergeIndex++] = leftArray[left++];
             } else {
-                mergedArray[mergeIndex++] = array[right++];
+                mergedArray[mergeIndex++] = rightArray[right++];
             }
         }
 
-        while (left < middle) {
-            mergedArray[mergeIndex++] = array[left++];
+        while (left < leftArray.length) {
+            mergedArray[mergeIndex++] = leftArray[left++];
         }
 
-        while (right < end) {
-            mergedArray[mergeIndex++] = array[right++];
+        while (right < rightArray.length) {
+            mergedArray[mergeIndex++] = rightArray[right++];
         }
 
-        System.arraycopy(mergedArray, 0, array, start, mergedArray.length);
+        System.arraycopy(mergedArray, 0, array, 0, mergedArray.length);
     }
 }
