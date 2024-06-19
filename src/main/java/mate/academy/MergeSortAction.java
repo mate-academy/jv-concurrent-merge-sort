@@ -1,43 +1,60 @@
 package mate.academy;
 
-import java.util.Arrays;
 import java.util.concurrent.RecursiveAction;
 
 public class MergeSortAction extends RecursiveAction {
-    private int[] array;
-    private int length;
+    private final int[] array;
+    private final int left;
+    private final int right;
 
     public MergeSortAction(int[] array) {
+        this(array, 0, array.length - 1);
+    }
+
+    private MergeSortAction(int[] array, int left, int right) {
         this.array = array;
-        this.length = array.length;
+        this.left = left;
+        this.right = right;
     }
 
     @Override
     protected void compute() {
-        if (array.length <= 1) {
-            return;
+        if (left < right) {
+            int middle = (left + right) / 2;
+            invokeAll(
+                    new MergeSortAction(array, left, middle),
+                    new MergeSortAction(array, middle + 1, right)
+            );
+
+            merge(array, left, middle, right);
         }
-        var left = Arrays.copyOfRange(array, 0, length / 2);
-        var right = Arrays.copyOfRange(array, length / 2, length);
-        var leftTask = new MergeSortAction(left);
-        var rightTask = new MergeSortAction(right);
-        leftTask.fork();
-        rightTask.compute();
-        leftTask.join();
-        merge(array, left, right);
     }
 
-    private void merge(int[] array, int[] left, int[] right) {
+    private void merge(int[] array, int left, int middle, int right) {
+        int[] leftArray = new int[middle - left + 1];
+        int[] rightArray = new int[right - middle];
+
+        System.arraycopy(array, left, leftArray, 0, leftArray.length);
+        System.arraycopy(array, middle + 1, rightArray, 0, rightArray.length);
+
         int i = 0;
         int j = 0;
-        while (i < left.length && j < right.length) {
-            if (left[i] < right[j]) {
-                array[i + j] = left[i++];
+        int k = left;
+
+        while (i < leftArray.length && j < rightArray.length) {
+            if (leftArray[i] <= rightArray[j]) {
+                array[k++] = leftArray[i++];
             } else {
-                array[i + j] = right[j++];
+                array[k++] = rightArray[j++];
             }
         }
-        System.arraycopy(left, i, array, i + j, left.length - i);
-        System.arraycopy(right, j, array, i + j, right.length - j);
+
+        while (i < leftArray.length) {
+            array[k++] = leftArray[i++];
+        }
+
+        while (j < rightArray.length) {
+            array[k++] = rightArray[j++];
+        }
     }
 }
