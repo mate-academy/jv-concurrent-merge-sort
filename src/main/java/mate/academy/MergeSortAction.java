@@ -20,26 +20,29 @@ public class MergeSortAction extends RecursiveAction {
             MergeSortAction leftAction = new MergeSortAction(left);
             MergeSortAction rightAction = new MergeSortAction(right);
             invokeAll(leftAction, rightAction);
-            merge(left, right);
+            merge(array, left, right);
         }
     }
 
-    private void merge(int[] left, int[] right) {
+    private void merge(int[] array, int[] left, int[] right) {
         int leftIndex = 0;
         int rightIndex = 0;
-        int arrayIndex = 0;
+        int resultIndex = 0;
 
-        int leftLength = left.length;
-        int rightLength = right.length;
-
-        while (leftIndex < leftLength || rightIndex < rightLength) {
-            if (leftIndex < leftLength
-                    && (rightIndex >= rightLength
-                    || left[leftIndex] < right[rightIndex])) {
-                array[arrayIndex++] = left[leftIndex++];
+        while (leftIndex < left.length && rightIndex < right.length) {
+            if (left[leftIndex] <= right[rightIndex]) {
+                array[resultIndex++] = left[leftIndex++];
             } else {
-                array[arrayIndex++] = right[rightIndex++];
+                array[resultIndex++] = right[rightIndex++];
             }
+        }
+
+        while (leftIndex < left.length) {
+            array[resultIndex++] = left[leftIndex++];
+        }
+
+        while (rightIndex < right.length) {
+            array[resultIndex++] = right[rightIndex++];
         }
     }
 }
