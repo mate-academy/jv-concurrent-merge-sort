@@ -27,24 +27,24 @@ public class MergeSortAction extends RecursiveAction {
     }
 
     private void merge(int[] result, int[] left, int[] right) {
-        int i = 0;
-        int j = 0;
-        int k = 0;
+        int leftIndex = 0;
+        int rightIndex = 0;
+        int resultIndex = 0;
 
-        while (i < left.length && j < right.length) {
-            if (left[i] <= right[j]) {
-                result[k++] = left[i++];
+        while (leftIndex < left.length && rightIndex < right.length) {
+            if (left[leftIndex] <= right[rightIndex]) {
+                result[resultIndex++] = left[leftIndex++];
             } else {
-                result[k++] = right[j++];
+                result[resultIndex++] = right[rightIndex++];
             }
         }
 
-        while (i < left.length) {
-            result[k++] = left[i++];
+        while (leftIndex < left.length) {
+            result[resultIndex++] = left[leftIndex++];
         }
 
-        while (j < right.length) {
-            result[k++] = right[j++];
+        while (rightIndex < right.length) {
+            result[resultIndex++] = right[rightIndex++];
         }
     }
 }
