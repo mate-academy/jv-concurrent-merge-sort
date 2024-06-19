@@ -5,20 +5,20 @@ import java.util.concurrent.RecursiveAction;
 
 public class MergeSortAction extends RecursiveAction {
     private int[] array;
-    private int n;
+    private int length;
 
     public MergeSortAction(int[] array) {
         this.array = array;
-        this.n = array.length;
+        this.length = array.length;
     }
 
     @Override
     protected void compute() {
-        if (array.length == 1) {
+        if (array.length <= 1) {
             return;
         }
-        var left = Arrays.copyOfRange(array, 0 , n/2);
-        var right = Arrays.copyOfRange(array, n/2 , n);
+        var left = Arrays.copyOfRange(array, 0, length / 2);
+        var right = Arrays.copyOfRange(array, length / 2, length);
         var leftTask = new MergeSortAction(left);
         var rightTask = new MergeSortAction(right);
         leftTask.fork();
