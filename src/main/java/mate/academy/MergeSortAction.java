@@ -19,7 +19,6 @@ public class MergeSortAction extends RecursiveAction {
         if (workLoad > THRESHOLD) {
             int middle = workLoad / 2;
 
-
             int[] first = Arrays.copyOfRange(array, start, middle);
             int[] second = Arrays.copyOfRange(array, middle, workLoad);
 
