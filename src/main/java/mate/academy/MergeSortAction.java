@@ -5,50 +5,59 @@ import java.util.concurrent.RecursiveAction;
 
 public class MergeSortAction extends RecursiveAction {
     private static final int THRESHOLD = 1;
+    private static final int START = 0;
+
     private final int[] array;
+    private final int start;
+    private final int end;
 
     public MergeSortAction(int[] array) {
+        this(array, START, array.length);
+    }
+
+    private MergeSortAction(int[] array, int start, int end) {
         this.array = array;
+        this.start = start;
+        this.end = end;
     }
 
     @Override
     protected void compute() {
-        int start = 0;
-        int workLoad = array.length;
+        int arrayLength = end - start;
 
-        if (workLoad > THRESHOLD) {
-            int middle = workLoad / 2;
+        if (arrayLength > THRESHOLD) {
+            int middle = start + arrayLength / 2;
 
-            int[] first = Arrays.copyOfRange(array, start, middle);
-            int[] second = Arrays.copyOfRange(array, middle, workLoad);
-
-            MergeSortAction firstSort = new MergeSortAction(first);
-            MergeSortAction secondSort = new MergeSortAction(second);
+            MergeSortAction firstSort = new MergeSortAction(array, start, middle);
+            MergeSortAction secondSort = new MergeSortAction(array, middle, end);
 
             invokeAll(firstSort, secondSort);
-            merge(first, second);
+            merge(start, middle, end);
         }
     }
 
-    private void merge(int[] first, int[] second) {
-        int firstIndex = 0;
-        int secondIndex = 0;
-        int arrayIndex = 0;
+    private void merge(int start, int middle, int end) {
+        int[] left = Arrays.copyOfRange(array, start, middle);
+        int[] right = Arrays.copyOfRange(array, middle, end);
 
-        while (firstIndex < first.length && secondIndex < second.length) {
-            if (first[firstIndex] <= second[secondIndex]) {
-                array[arrayIndex++] = first[firstIndex++];
+        int leftIndex = START;
+        int rightIndex = START;
+        int arrayIndex = start;
+
+        while (leftIndex < left.length && rightIndex < right.length) {
+            if (left[leftIndex] <= right[rightIndex]) {
+                array[arrayIndex++] = left[leftIndex++];
             } else {
-                array[arrayIndex++] = second[secondIndex++];
+                array[arrayIndex++] = right[rightIndex++];
             }
         }
 
-        while (firstIndex < first.length) {
-            array[arrayIndex++] = first[firstIndex++];
+        while (leftIndex < left.length) {
+            array[arrayIndex++] = left[leftIndex++];
         }
 
-        while (secondIndex < second.length) {
-            array[arrayIndex++] = second[secondIndex++];
+        while (rightIndex < right.length) {
+            array[arrayIndex++] = right[rightIndex++];
         }
     }
 }
