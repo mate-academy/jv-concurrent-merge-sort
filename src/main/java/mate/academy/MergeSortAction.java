@@ -1,7 +1,6 @@
 package mate.academy;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.concurrent.RecursiveAction;
 
 public class MergeSortAction extends RecursiveAction {
