@@ -4,8 +4,8 @@ import java.util.concurrent.RecursiveAction;
 
 public class MergeSortAction extends RecursiveAction {
     private final int[] array;
-    private int left;
-    private int right;
+    private final int left;
+    private final int right;
 
     public MergeSortAction(int[] array) {
         this(array, 0, array.length - 1);
@@ -16,19 +16,11 @@ public class MergeSortAction extends RecursiveAction {
         this.left = left;
         this.right = right;
     }
-    // 3 9 1 0 2 8
-    // mid = 2
-    // 3 9 1
-    // 3 9
-    // 1
-    // 3
-    // 9
 
-    // 0 2 8 ->
     @Override
     protected void compute() {
         if (left < right) {
-            int mid = (left + right) / 2;
+            int mid = left + (right - left) / 2;;
             MergeSortAction leftTask = new MergeSortAction(array, left, mid);
             MergeSortAction rightTask = new MergeSortAction(array, mid + 1, right);
             invokeAll(leftTask, rightTask);
@@ -36,7 +28,7 @@ public class MergeSortAction extends RecursiveAction {
         }
     }
 
-    private void merge(int[] array, int left, int mid, int right) {
+    private static void merge(int[] array, int left, int mid, int right) {
         int sizeOfLeft = mid - left + 1;
         int sizeOfRight = right - mid;
         int[] leftArray = new int[sizeOfLeft];
