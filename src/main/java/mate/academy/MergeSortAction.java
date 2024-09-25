@@ -27,8 +27,10 @@ public class MergeSortAction extends RecursiveAction {
     protected void compute() {
         if (leftIndex < rightIndex && (rightIndex - leftIndex + 1) > threshold) {
             int middleIndex = (leftIndex + rightIndex) / 2;
-            MergeSortAction leftTask = new MergeSortAction(array, leftIndex, middleIndex, threshold);
-            MergeSortAction rightTask = new MergeSortAction(array, middleIndex + 1, rightIndex, threshold);
+            MergeSortAction leftTask =
+                    new MergeSortAction(array, leftIndex, middleIndex, threshold);
+            MergeSortAction rightTask =
+                    new MergeSortAction(array, middleIndex + 1, rightIndex, threshold);
             leftTask.fork();
             rightTask.fork();
             leftTask.join();
