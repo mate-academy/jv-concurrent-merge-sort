@@ -41,6 +41,7 @@ public class MergeSortAction extends RecursiveAction {
         int i = start;
         int j = mid;
         int k = 0;
+
         while (i < mid && j < end) {
             if (array[i] <= array[j]) {
                 temp[k++] = array[i++];
@@ -48,9 +49,11 @@ public class MergeSortAction extends RecursiveAction {
                 temp[k++] = array[j++];
             }
         }
+
         while (i < mid) {
             temp[k++] = array[i++];
         }
+
         while (j < end) {
             temp[k++] = array[j++];
         }
