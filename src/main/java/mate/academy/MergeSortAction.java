@@ -1,5 +1,6 @@
 package mate.academy;
 
+import java.util.Arrays;
 import java.util.concurrent.RecursiveAction;
 
 public class MergeSortAction extends RecursiveAction {
@@ -21,12 +22,7 @@ public class MergeSortAction extends RecursiveAction {
     @Override
     protected void compute() {
         if (finishPoint - startPoint <= THRESHOLD) {
-            if (finishPoint - startPoint == THRESHOLD
-                    && array[startPoint] > array[startPoint + 1]) {
-                int temp = array[startPoint];
-                array[startPoint] = array[startPoint + 1];
-                array[startPoint + 1] = temp;
-            }
+            Arrays.sort(array, startPoint, finishPoint);
         } else {
             int middle = startPoint + (finishPoint - startPoint) / 2;
             MergeSortAction left = new MergeSortAction(array, startPoint, middle);
