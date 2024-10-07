@@ -24,7 +24,7 @@ public class MergeSortAction extends RecursiveAction {
         if (end - start <= THRESHOLD) {
             sequentialSort(array, start, end);
         } else {
-            int mid = (start + end) / 2;
+            int mid = start + (end - start) / 2;
 
             MergeSortAction leftTask = new MergeSortAction(array, start, mid);
             MergeSortAction rightTask = new MergeSortAction(array, mid, end);
@@ -36,18 +36,15 @@ public class MergeSortAction extends RecursiveAction {
     }
 
     private void sequentialSort(int[] array, int start, int end) {
-        for (int i = start; i < end; i++) {
-            for (int j = i + 1; j < end; j++) {
-                if (array[i] > array[j]) {
-                    int temp = array[i];
-                    array[i] = array[j];
-                    array[j] = temp;
-                }
-            }
-        }
+        java.util.Arrays.sort(array, start, end);
     }
 
     private void merge(int[] array, int start, int mid, int end) {
+        // Check if merging is necessary
+        if (array[mid - 1] <= array[mid]) {
+            return; // Subarrays are already sorted
+        }
+
         int[] temp = new int[end - start];
         int i = start;
         int j = mid;
