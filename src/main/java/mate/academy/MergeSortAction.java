@@ -3,7 +3,7 @@ package mate.academy;
 import java.util.concurrent.RecursiveAction;
 
 public class MergeSortAction extends RecursiveAction {
-    private static final int THRESHOLD = 2;
+    private static final int THRESHOLD = 10;
     private final int[] array;
     private final int start;
     private final int end;
@@ -23,7 +23,7 @@ public class MergeSortAction extends RecursiveAction {
         if (end - start + 1 <= THRESHOLD) {
             insertionSort(array, start, end);
         } else {
-            int mid = (start + end) / 2;
+            int mid = start + (end - start) / 2;
 
             MergeSortAction leftTask = new MergeSortAction(array, start, mid);
             MergeSortAction rightTask = new MergeSortAction(array, mid + 1, end);
