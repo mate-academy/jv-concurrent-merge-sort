@@ -3,7 +3,6 @@ package mate.academy;
 import java.util.concurrent.ForkJoinPool;
 
 public class ConcurrentMergeSortExample {
-
     public static void sort(int[] array) {
         ForkJoinPool forkJoinPool = ForkJoinPool.commonPool();
         forkJoinPool.invoke(new MergeSortAction(array));
