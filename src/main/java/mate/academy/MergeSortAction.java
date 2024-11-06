@@ -33,7 +33,7 @@ public class MergeSortAction extends RecursiveAction {
         merge(start, middle, end);
     }
 
-    public void merge(int start, int middle, int end) {
+    private void merge(int start, int middle, int end) {
         int[] temp = new int[end - start];
         int i = start;
         int j = middle;
