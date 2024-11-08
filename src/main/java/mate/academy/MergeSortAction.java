@@ -6,7 +6,6 @@ import java.util.concurrent.RecursiveAction;
 public class MergeSortAction extends RecursiveAction {
     private final int[] array;
 
-
     public MergeSortAction(int[] array) {
         this.array = array;
     }
