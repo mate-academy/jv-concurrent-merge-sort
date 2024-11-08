@@ -37,7 +37,9 @@ public class MergeSortAction extends RecursiveAction {
         int[] left = Arrays.copyOfRange(array, start, middle);
         int[] right = Arrays.copyOfRange(array, middle, end + 1);
 
-        int i = 0, j = 0, k = start;
+        int i = 0;
+        int j = 0;
+        int k = start;
         while (i < left.length && j < right.length) {
             if (left[i] <= right[j]) {
                 array[k++] = left[i++];
