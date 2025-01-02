@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.concurrent.RecursiveAction;
 
 public class MergeSortAction extends RecursiveAction {
-     private int[] array;
+    private int[] array;
 
     public MergeSortAction(int[] array) {
         this.array = array;
@@ -12,18 +12,18 @@ public class MergeSortAction extends RecursiveAction {
 
     @Override
     protected void compute() {
-            if (array.length > 1) {
-                int middlePoint = array.length / 2;
-                int[] leftArray = Arrays.copyOfRange(array, 0, middlePoint);
-                int[] rightArray = Arrays.copyOfRange(array, middlePoint, array.length);
-                MergeSortAction leftAction = new MergeSortAction(leftArray);
-                MergeSortAction rightAction = new MergeSortAction(rightArray);
-                leftAction.fork();
-                rightAction.fork();
-                leftAction.join();
-                rightAction.join();
-                merge(leftArray, rightArray);
-            }
+        if (array.length > 1) {
+            int middlePoint = array.length / 2;
+            int[] leftArray = Arrays.copyOfRange(array, 0, middlePoint);
+            int[] rightArray = Arrays.copyOfRange(array, middlePoint, array.length);
+            MergeSortAction leftAction = new MergeSortAction(leftArray);
+            MergeSortAction rightAction = new MergeSortAction(rightArray);
+            leftAction.fork();
+            rightAction.fork();
+            leftAction.join();
+            rightAction.join();
+            merge(leftArray, rightArray);
+        }
     }
 
     private void merge(int[] leftArray, int[] rightArray) {
@@ -39,10 +39,10 @@ public class MergeSortAction extends RecursiveAction {
             }
         }
 
-        while(leftIndex < leftArray.length) {
+        while (leftIndex < leftArray.length) {
             result[resultIndex++] = leftArray[leftIndex++];
         }
-        while(rightIndex < rightArray.length) {
+        while (rightIndex < rightArray.length) {
             result[resultIndex++] = rightArray[rightIndex++];
         }
 
