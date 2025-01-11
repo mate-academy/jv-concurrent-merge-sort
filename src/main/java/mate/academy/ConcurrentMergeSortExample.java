@@ -1,12 +1,14 @@
 package mate.academy;
 
 import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.RecursiveAction;
 
 public class ConcurrentMergeSortExample {
 
     public static void sort(int[] array) {
         ForkJoinPool forkJoinPool = ForkJoinPool.commonPool();
-        forkJoinPool.invoke(new MergeSortAction(array));
+        RecursiveAction recursiveAction = new MergeSortAction(array);
+        forkJoinPool.invoke(recursiveAction);
     }
 
     public static void main(String[] args) {
