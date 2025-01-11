@@ -4,10 +4,10 @@ import java.util.Arrays;
 import java.util.concurrent.RecursiveAction;
 
 public class MergeSortAction extends RecursiveAction {
-    private static final int THRESHOLD = 4;
-    private int[] array;
-    private int first;
-    private int last;
+    private static final int THRESHOLD = 16; // Поріг для маленьких підмасивів
+    private final int[] array;
+    private final int first;
+    private final int last;
 
     public MergeSortAction(int[] array) {
         this(array, 0, array.length);
@@ -21,19 +21,15 @@ public class MergeSortAction extends RecursiveAction {
 
     @Override
     protected void compute() {
-        if (last - first < THRESHOLD) {
-            Arrays.sort(array);
+        if (last - first <= THRESHOLD) {
+            Arrays.sort(array, first, last);
         } else {
             int middle = first + (last - first) / 2;
 
-            MergeSortAction firstTask = new MergeSortAction(array, first, middle);
-            MergeSortAction secondTask = new MergeSortAction(array, middle, last);
+            MergeSortAction leftTask = new MergeSortAction(array, first, middle);
+            MergeSortAction rightTask = new MergeSortAction(array, middle, last);
 
-            firstTask.fork();
-            secondTask.fork();
-
-            firstTask.join();
-            secondTask.join();
+            invokeAll(leftTask, rightTask);
         }
     }
 }
