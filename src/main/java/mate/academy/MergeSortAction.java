@@ -1,39 +1,58 @@
 package mate.academy;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.concurrent.RecursiveAction;
 
 public class MergeSortAction extends RecursiveAction {
     private final int[] array;
+    private final int left;
+    private final int right;
 
     public MergeSortAction(int[] array) {
+        this(array, 0, array.length);
+    }
+
+    private MergeSortAction(int[] array, int left, int right) {
         this.array = array;
+        this.left = left;
+        this.right = right;
     }
 
     @Override
     protected void compute() {
-        if (array.length == 0) {
-            List<RecursiveAction> actions = new ArrayList<>(createSubTasks());
-            for (RecursiveAction action : actions) {
-                action.fork();
+        if (right - left <= 1) {
+            return;
+        }
+
+        int mid = (left + right) / 2;
+
+        MergeSortAction leftTask = new MergeSortAction(array, left, mid);
+        MergeSortAction rightTask = new MergeSortAction(array, mid, right);
+
+        invokeAll(leftTask, rightTask);
+
+        merge(left, mid, right);
+    }
+
+    private void merge(int left, int mid, int right) {
+        int[] temp = Arrays.copyOfRange(array, left, right);
+        int i = 0;
+        int j = mid - left;
+        int k = left;
+
+        while (i < mid - left && j < right - left) {
+            if (temp[i] <= temp[j]) {
+                array[k++] = temp[i++];
+            } else {
+                array[k++] = temp[j++];
             }
-        } else {
-            Arrays.sort(array);
+        }
+        while (i < mid - left) {
+            array[k++] = temp[i++];
+        }
+        while (j < right - left) {
+            array[k++] = temp[j++];
         }
     }
-
-    private List<RecursiveAction> createSubTasks() {
-        List<RecursiveAction> subTasks = new ArrayList<>();
-        MergeSortAction first = new MergeSortAction(
-                Arrays.copyOfRange(array, 0, array.length / 2));
-        MergeSortAction second = new MergeSortAction(
-                Arrays.copyOfRange(array, array.length / 2, array.length));
-
-        subTasks.add(first);
-        subTasks.add(second);
-
-        return subTasks;
-    }
 }
+
