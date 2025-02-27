@@ -20,7 +20,7 @@ public class MergeSortAction extends RecursiveAction {
 
     @Override
     protected void compute() {
-        if (array.length == 0) {
+        if (end - start < 1) {
             return;
         }
         if (end - start < THRESHOLD) {
