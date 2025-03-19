@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.concurrent.RecursiveAction;
 
 public class MergeSortAction extends RecursiveAction {
-
     private final int[] array;
 
     public MergeSortAction(int[] array) {
@@ -30,28 +29,30 @@ public class MergeSortAction extends RecursiveAction {
 
         leftTask.join();
 
-        merge(left, right);
+        int[] mergedResult = merge(left, right);
+        System.arraycopy(mergedResult, 0, array, 0, array.length); // Copy back to original array
     }
 
-    private void merge(int[] left, int[] right) {
-        int i = 0;
-        int j = 0;
-        int k = 0;
+    private int[] merge(int[] left, int[] right) {
+        int[] result = new int[left.length + right.length];
+        int i = 0, j = 0, k = 0;
 
         while (i < left.length && j < right.length) {
             if (left[i] <= right[j]) {
-                array[k++] = left[i++];
+                result[k++] = left[i++];
             } else {
-                array[k++] = right[j++];
+                result[k++] = right[j++];
             }
         }
 
         while (i < left.length) {
-            array[k++] = left[i++];
+            result[k++] = left[i++];
         }
 
         while (j < right.length) {
-            array[k++] = right[j++];
+            result[k++] = right[j++];
         }
+
+        return result;
     }
 }
