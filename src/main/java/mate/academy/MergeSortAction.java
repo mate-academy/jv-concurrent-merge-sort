@@ -21,6 +21,10 @@ public class MergeSortAction extends RecursiveAction {
 
     @Override
     protected void compute() {
+        if (left < 0 || right > array.length) {
+            throw new IndexOutOfBoundsException();
+        }
+
         if (right - left <= 1) {
             return;
         }
