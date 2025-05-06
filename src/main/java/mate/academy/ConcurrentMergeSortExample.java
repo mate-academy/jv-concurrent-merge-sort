@@ -15,7 +15,6 @@ public class ConcurrentMergeSortExample {
         for (int value : array) {
             System.out.print(value + " ");
         }
-
         sort(array);
 
         System.out.println("\nSorted array: ");
