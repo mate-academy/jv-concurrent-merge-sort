@@ -33,8 +33,12 @@ public class MergeSortAction extends RecursiveAction {
 
     private void merge(int start, int middle, int end) {
         int[] buffer = Arrays.copyOfRange(array, start, middle);
-        for (int i = start, leftIndex = 0, rightIndex = middle; leftIndex < buffer.length; i++) {
-            if (rightIndex == end || buffer[leftIndex] < array[rightIndex]) {
+        int leftIndex = 0;
+        int rightIndex = middle;
+
+        for (int i = start; i < end; i++) {
+            if (leftIndex < buffer.length && (rightIndex == end
+                    || buffer[leftIndex] <= array[rightIndex])) {
                 array[i] = buffer[leftIndex];
                 leftIndex++;
             } else {
