@@ -3,6 +3,7 @@ package mate.academy;
 import java.util.concurrent.RecursiveAction;
 
 public class MergeSortAction extends RecursiveAction {
+    private static final int THRESHOLD = 16;
     private final int[] array;
     private final int left;
     private final int right;
@@ -20,7 +21,7 @@ public class MergeSortAction extends RecursiveAction {
     @Override
     protected void compute() {
         var distance = right - left;
-        if (distance < 1) {
+        if (distance < THRESHOLD) {
             sort(array, left, right);
             return;
         }
