@@ -23,14 +23,12 @@ public class MergeSortAction extends RecursiveAction {
         int size = end - start;
         if (end - start <= threshold) {
             if (size == 2 && array[start] > array[start + 1]) {
-                System.out.println("Little");
                 int temp = array[start];
                 array[start] = array[start + 1];
                 array[start + 1] = temp;
             }
         } else {
             int mid = start + (end - start) / 2;
-            System.out.println("Position: " + mid);
             MergeSortAction left = new MergeSortAction(array, start, mid);
             MergeSortAction right = new MergeSortAction(array, mid, end);
 
