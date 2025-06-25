@@ -3,10 +3,11 @@ package mate.academy;
 import java.util.concurrent.RecursiveAction;
 
 public class MergeSortAction extends RecursiveAction {
+    private static final int THRESHOLD = 16;
+
     private final int[] array;
     private final int left;
     private final int right;
-    private static final int THRESHOLD = 16;
 
     public MergeSortAction(int[] array) {
         this(array, 0, array.length - 1);
@@ -39,7 +40,9 @@ public class MergeSortAction extends RecursiveAction {
 
     private void merge(int[] array, int left, int mid, int right) {
         int[] temp = new int[right - left + 1];
-        int i = left, j = mid + 1, k = 0;
+        int i = left;
+        int j = mid + 1;
+        int k = 0;
 
         while (i <= mid && j <= right) {
             temp[k++] = (array[i] <= array[j]) ? array[i++] : array[j++];
