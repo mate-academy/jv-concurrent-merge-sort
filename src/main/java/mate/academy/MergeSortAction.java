@@ -29,7 +29,7 @@ public class MergeSortAction extends RecursiveAction {
             return;
         }
 
-        int mid = left + (right - left) / 2;
+        int mid = left + ((right - left) / 2);
         MergeSortAction leftTask = new MergeSortAction(array, left, mid);
         MergeSortAction rightTask = new MergeSortAction(array, mid + 1, right);
 
