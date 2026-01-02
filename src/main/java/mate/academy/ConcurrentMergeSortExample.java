@@ -4,9 +4,9 @@ import java.util.concurrent.ForkJoinPool;
 
 public class ConcurrentMergeSortExample {
 
-    public static void sort(int[] array) {
+    public static int[] sort(int[] array) {
         ForkJoinPool forkJoinPool = ForkJoinPool.commonPool();
-        forkJoinPool.invoke(new MergeSortAction(array));
+        return forkJoinPool.invoke(new MergeSortAction(array));
     }
 
     public static void main(String[] args) {
@@ -16,10 +16,10 @@ public class ConcurrentMergeSortExample {
             System.out.print(value + " ");
         }
 
-        sort(array);
+        int[] sorted = sort(array);
 
         System.out.println("\nSorted array: ");
-        for (int value : array) {
+        for (int value : sorted) {
             System.out.print(value + " ");
         }
     }
