@@ -19,10 +19,10 @@ class MergeSortActionTest {
         ForkJoinPool pool = new ForkJoinPool();
 
         // when
-        pool.invoke(action);
+        int[] actual = pool.invoke(action);
 
         // then
-        assertArrayEquals(new int[]{1, 1, 2, 3, 3, 4, 5, 5, 5, 6, 9}, unsortedArray);
+        assertArrayEquals(new int[]{1, 1, 2, 3, 3, 4, 5, 5, 5, 6, 9}, actual);
     }
 
     @Test
@@ -33,10 +33,10 @@ class MergeSortActionTest {
         ForkJoinPool pool = new ForkJoinPool();
 
         // when
-        pool.invoke(action);
+        int[] actual = pool.invoke(action);
 
         // then
-        assertArrayEquals(new int[]{}, emptyArray);
+        assertArrayEquals(new int[]{}, actual);
     }
 
     @Test
@@ -47,10 +47,10 @@ class MergeSortActionTest {
         ForkJoinPool pool = new ForkJoinPool();
 
         // when
-        pool.invoke(action);
+        int[] actual = pool.invoke(action);
 
         // then
-        assertArrayEquals(new int[]{42}, singleElementArray);
+        assertArrayEquals(new int[]{42}, actual);
     }
 
     @Test
@@ -61,10 +61,10 @@ class MergeSortActionTest {
         ForkJoinPool pool = new ForkJoinPool();
 
         // when
-        pool.invoke(action);
+        int[] actual = pool.invoke(action);
 
         // then
-        assertArrayEquals(new int[]{3, 3, 5, 5, 5}, arrayWithDuplicates);
+        assertArrayEquals(new int[]{3, 3, 5, 5, 5}, actual);
     }
 
     @Test
@@ -75,9 +75,9 @@ class MergeSortActionTest {
         ForkJoinPool pool = new ForkJoinPool();
 
         // when
-        pool.invoke(action);
+        int[] actual = pool.invoke(action);
 
         // then
-        assertArrayEquals(new int[]{1, 2, 3, 4, 5}, sortedArray);
+        assertArrayEquals(new int[]{1, 2, 3, 4, 5}, actual);
     }
 }
