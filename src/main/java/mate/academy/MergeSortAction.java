@@ -26,7 +26,7 @@ public class MergeSortAction extends RecursiveAction {
         } else {
             int middle = start + (end - start) / 2;
             MergeSortAction left = new MergeSortAction(array, start, middle);
-            MergeSortAction right = new MergeSortAction(array, middle + 1, end);
+            MergeSortAction right = new MergeSortAction(array, middle, end);
 
             invokeAll(left, right);
 
