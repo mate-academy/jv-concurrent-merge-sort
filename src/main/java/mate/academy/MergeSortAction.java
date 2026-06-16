@@ -31,18 +31,24 @@ public class MergeSortAction extends RecursiveAction {
     }
 
     private void merge(int[] left, int[] right, int[] result) {
-        int[] merged = new int[array.length];
         int i = 0;
+        int j = 0;
+        int k = 0;
 
-        for (int leftelement : left) {
-            merged[i++] = leftelement;
+        while (i < left.length && j < right.length) {
+            if (left[i] < right[j]) {
+                result[k++] = left[i++];
+            } else {
+                result[k++] = right[j++];
+            }
         }
 
-        for (int element : right) {
-            merged[i++] = element;
+        while (i < left.length) {
+            result[k++] = left[i++];
         }
 
-        Arrays.sort(merged);
-        System.arraycopy(merged, 0, result, 0, merged.length);
+        while (j < right.length) {
+            result[k++] = right[j++];
+        }
     }
 }
